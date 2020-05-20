@@ -127,70 +127,70 @@ class SearchViewController: CustomViewController {
         }
     }
     
-    private func startRecording() throws {
-
-        // Cancel the previous task if it's running.
-        if let recognitionTask = recognitionTask {
-            recognitionTask.cancel()
-            self.recognitionTask = nil
-        }
-        
-        let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(AVAudioSession.Category.record)
-        try audioSession.setMode(AVAudioSession.Mode.measurement)
-        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-        
-        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        
-        let inputNode = audioEngine.inputNode
-        guard let recognitionRequest = recognitionRequest else { fatalError("Unable to created a SFSpeechAudioBufferRecognitionRequest object") }
-        
-        // Configure request so that results are returned before audio recording is finished
-        recognitionRequest.shouldReportPartialResults = true
-        
-        // A recognition task represents a speech recognition session.
-        // We keep a reference to the task so that it can be cancelled.
-        recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
-            var isFinal = false
-            
-            if let result = result {
-                self.txtViewVoiceresult.text = result.bestTranscription.formattedString
-                isFinal = result.isFinal
-            }
-            
-            if error != nil || isFinal {
-                self.audioEngine.stop()
-                inputNode.removeTap(onBus: 0)
-                
-                self.recognitionRequest = nil
-                self.recognitionTask = nil
-                
-//                self.recordButton.isEnabled = true
-//                self.recordButton.setTitle("Start Recording", for: [])
-            }
-        }
-        
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
-            self.recognitionRequest?.append(buffer)
-        }
-        
-        audioEngine.prepare()
-        try audioEngine.start()
-        
-    }
+//    private func startRecording() throws {
+//
+//        // Cancel the previous task if it's running.
+//        if let recognitionTask = recognitionTask {
+//            recognitionTask.cancel()
+//            self.recognitionTask = nil
+//        }
+//
+//        let audioSession = AVAudioSession.sharedInstance()
+//        try audioSession.setCategory(AVAudioSession.Category.record)
+//        try audioSession.setMode(AVAudioSession.Mode.measurement)
+//        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+//
+//        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+//
+//        let inputNode = audioEngine.inputNode
+//        guard let recognitionRequest = recognitionRequest else { fatalError("Unable to created a SFSpeechAudioBufferRecognitionRequest object") }
+//
+//        // Configure request so that results are returned before audio recording is finished
+//        recognitionRequest.shouldReportPartialResults = true
+//
+//        // A recognition task represents a speech recognition session.
+//        // We keep a reference to the task so that it can be cancelled.
+//        recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
+//            var isFinal = false
+//
+//            if let result = result {
+//                self.txtViewVoiceresult.text = result.bestTranscription.formattedString
+//                isFinal = result.isFinal
+//            }
+//
+//            if error != nil || isFinal {
+//                self.audioEngine.stop()
+//                inputNode.removeTap(onBus: 0)
+//
+//                self.recognitionRequest = nil
+//                self.recognitionTask = nil
+//
+////                self.recordButton.isEnabled = true
+////                self.recordButton.setTitle("Start Recording", for: [])
+//            }
+//        }
+//
+//        let recordingFormat = inputNode.outputFormat(forBus: 0)
+//        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+//            self.recognitionRequest?.append(buffer)
+//        }
+//
+//        audioEngine.prepare()
+//        try audioEngine.start()
+//
+//    }
     
-    @objc func stopRecording() {
-        
-        if audioEngine.isRunning {
-            audioEngine.stop()
-            recognitionRequest?.endAudio()
-        }
-        
-        viewContent.isUserInteractionEnabled = true
-        viewContent.alpha = 1
-        viewVoice.isHidden = true
-    }
+//    @objc func stopRecording() {
+//        
+//        if audioEngine.isRunning {
+//            audioEngine.stop()
+//            recognitionRequest?.endAudio()
+//        }
+//        
+//        viewContent.isUserInteractionEnabled = true
+//        viewContent.alpha = 1
+//        viewVoice.isHidden = true
+//    }
     
     //MARK:- IBACTION METHODS
     @IBAction func clickedBtnVoice(_ sender: Any) {
@@ -199,21 +199,21 @@ class SearchViewController: CustomViewController {
         viewVoice.isHidden = false
     }
     
-    @IBAction func clickedBtnVoiceBig(_ sender: Any) {
-        
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self,   selector: (#selector(stopRecording)), userInfo: nil, repeats: false)
-        try! startRecording()
-        
-//        if audioEngine.isRunning {
-//            audioEngine.stop()
-//            recognitionRequest?.endAudio()
-//            recordButton.isEnabled = false
-//            recordButton.setTitle("Stopping", for: .disabled)
-//        } else {
-//            try! startRecording()
-//            recordButton.setTitle("Stop recording", for: [])
-//        }
-    }
+//    @IBAction func clickedBtnVoiceBig(_ sender: Any) {
+//        
+//        timer = Timer.scheduledTimer(timeInterval: 5, target: self,   selector: (#selector(stopRecording)), userInfo: nil, repeats: false)
+//        try! startRecording()
+//        
+////        if audioEngine.isRunning {
+////            audioEngine.stop()
+////            recognitionRequest?.endAudio()
+////            recordButton.isEnabled = false
+////            recordButton.setTitle("Stopping", for: .disabled)
+////        } else {
+////            try! startRecording()
+////            recordButton.setTitle("Stop recording", for: [])
+////        }
+//    }
     
     @IBAction func clcikedBtnSearch(_ sender: Any) {
         self.parentVC.navigator.navigate(to: .searchProduct(search: txtFieldSearch.text ?? "Search Product"))
@@ -266,7 +266,7 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return UITableView.automaticDimension
+        return UITableViewAutomaticDimension
     }
 }
 

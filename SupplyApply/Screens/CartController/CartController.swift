@@ -205,7 +205,7 @@ extension CartController : UITableViewDelegate, UITableViewDataSource {
             
             return CGFloat(50*((cartList?.totals?.count ?? 0)))
         } else {
-            return UITableView.automaticDimension
+            return UITableViewAutomaticDimension
         }
         
         
