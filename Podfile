@@ -2,7 +2,7 @@ platform :ios, '10.0'
 
 def sharedPods
   
-  pod 'Alamofire'
+  pod 'Alamofire', '5.0.0-beta.2'
   pod 'AppCenter'
   pod 'NVActivityIndicatorView'
   pod 'Nuke'
