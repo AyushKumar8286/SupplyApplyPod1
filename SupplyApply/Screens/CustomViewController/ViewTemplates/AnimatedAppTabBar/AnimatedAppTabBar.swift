@@ -53,7 +53,7 @@ class AnimatedAppTabBar: CustomViewController {
         viewSortBackground.isHidden = true
         
         if let vc = childVC {
-            addChildViewController(vc)
+            addChild(vc)
             vc.view.frame = containerView.frame
             vc.view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -66,7 +66,7 @@ class AnimatedAppTabBar: CustomViewController {
                 vc.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
                 ])
 
-            vc.didMove(toParentViewController: self)
+            vc.didMove(toParent: self)
         }
         
         
