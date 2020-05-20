@@ -8,7 +8,7 @@ s.summary = "SupplyApply lets a user select an ice cream flavor."
 s.static_framework = true
 
 # 2
-s.version = "0.1.0"
+s.version = "1.0.0"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
